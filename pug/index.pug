@@ -1,4 +1,11 @@
 extends layout
 
 block content
- h1 Hello World
+  .container.mt-4.mb-2.pt-5.pb-0
+    .row
+      .col-md-3
+        aside(id=sidebar).bg-secondary
+          h1 サイド
+      .col-md-9
+        main(role="main")
+          #circle-of-fifths

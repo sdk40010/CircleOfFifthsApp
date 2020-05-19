@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   context: __dirname + '/app',
   entry: './entry',
@@ -18,5 +20,12 @@ module.exports = {
         }
       }
     }]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      Popper: ['popper.js', 'default']
+    })
+  ]
 };
