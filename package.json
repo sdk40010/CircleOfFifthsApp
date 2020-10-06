@@ -5,6 +5,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "gulp": "^4.0.2",
     "gulp-pug": "^4.0.1",
@@ -16,6 +17,8 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "pixi.js": "^5.2.4",
-    "popper.js": "1.16.0"
+    "popper.js": "1.16.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
