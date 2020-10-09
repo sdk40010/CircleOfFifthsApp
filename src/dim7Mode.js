@@ -1,8 +1,9 @@
 'use strict';
 
-import * as PIXI from 'pixi.js'; 
+import * as PIXI from 'pixi.js';
+import { getRadian } from './util.js';
 
-function onDim7Mode(noteAreaData, appObj) {
+export default function handleDim7Mode(noteAreaData, appObj) {
   const componentList = [];
   const noteAreaIndex = noteAreaData.index;
   const alphabetical = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
@@ -68,5 +69,3 @@ function onDim7Mode(noteAreaData, appObj) {
   });
   
 }
-
-export default onDim7Mode;

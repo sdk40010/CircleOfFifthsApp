@@ -10,7 +10,7 @@ const compilePug = (done) => {
 }
 
 const bundleJS = () => {
-  src('app/entry.js')
+  src('src/entry.js')
     .pipe(webpack(require('./webpack.config')))
     .pipe(dest('.'));
 }

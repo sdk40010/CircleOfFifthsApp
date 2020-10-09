@@ -1,20 +1,25 @@
 body {
   font-family: 'Arial','Helvetica Neue','Helvetica',sans-serif;
 }
-#result-area .mode {
+#result-container .mode {
   font-size: 1.25rem;
 }
-#result-area .name {
+#result-container .name {
   font-size: 2.5rem;
   color: #333333;
 }
-#result-area .component-list-item:not(:first-child)::before {
+#result-container .name:not(:first-child)::before {
+  content: '/';
+  font-size: 2.5rem;
+  margin: 0 0.5rem;
+}
+#result-container .component-wrapper:not(:first-child)::before {
   content: '/';
   font-size: 1.25rem;
   margin-right: 0.25rem;
 
 }
-#result-area .component-list .component {
+#result-container .component {
   display: inline-block;
   width: 2rem;
   text-align: center;
@@ -24,6 +29,6 @@ body {
   padding: 3px 0;
   color: #333333;
 }
-#result-area .component-list-item .component:hover {
+#result-container .component:hover {
   background-color: #E0E0E0;
 }
