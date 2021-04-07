@@ -8,7 +8,6 @@
 export default function handleScaleMode(noteAreaData) {
   const componentsList = [];
   const noteAreaIndex = noteAreaData.index;
-  const alphabetical = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const withKeySignature = ['F' ,'C', 'G', 'D', 'A', 'E', 'B'];
 
   // スケールの主音から始まる構成音の配列を作成
@@ -29,7 +28,8 @@ export default function handleScaleMode(noteAreaData) {
   }
   // noteAreaIndexが6の場合はシャープとフラットの2種類の表記がある
   if (noteAreaIndex == 6) {
-    components = createComponents(components[1].name);
+    noteAreaData.noteName = components[1].name;
+    components = createComponents(noteAreaData);
   }
   if (6 <= noteAreaIndex && noteAreaIndex <= 11) {
     const withFlat = withKeySignature.slice().reverse().slice(0, 12 - noteAreaIndex);

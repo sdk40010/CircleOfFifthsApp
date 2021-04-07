@@ -1,26 +1,29 @@
 'use strict';
 
 import * as PIXI from 'pixi.js';
+import { CircleOfFifths } from './CircleOfFifths.js';
 import { getRadian } from './util.js';
 
-export default function handleDim7Mode(noteAreaData, appObj) {
+export default function handleDim7Mode(noteAreaData, circleOfFifths) {
+  const cf = circleOfFifths;
+  cf.destroy(['minorRing']);
+
   const componentList = [];
   const noteAreaIndex = noteAreaData.index;
   const alphabetical = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const rootIndex = alphabetical.indexOf(noteAreaData.noteName[0]);
-  const vertexIndexList = appObj.vertexIndexList['dim7'].map(vi => (vi + noteAreaIndex) % 12);
+  const vertexIndexList = CircleOfFifths.vertexIndexList['dim7'].map(vi => (vi + noteAreaIndex) % 12);
   
   function addToComponentList(rootIndex) {
     // 調号を付ける前のコード構成音リストを作成
-    // component( value: {name: 構成音の音名,　noteAreaIndex: 構成音に対応するnoteAreaのインデックス} )
-    const component = appObj.intervalList['seventh'].map(interval => {
+    const component = CircleOfFifths.intervalList['seventh'].map(interval => {
       const index = (rootIndex + (interval - 1)) % 7;
-      return { name: alphabetical[index] }; // ここではnoteAreaIndexプロパティは追加しない
+      return { name: alphabetical[index] };
     });
 
     // 調号を付ける
     vertexIndexList.forEach((vi, i) => {
-      const withKeySignature =　appObj.noteList['enharmonic'][vi].find(note => note.includes(component[i].name));
+      const withKeySignature =　CircleOfFifths.noteNameList['enharmonic'][vi].find(note => note.includes(component[i].name));
       component.splice(i, 1, { name: withKeySignature, noteAreaIndex: vi });
     });
     componentList.push(component);
@@ -35,37 +38,42 @@ export default function handleDim7Mode(noteAreaData, appObj) {
   }
 
   // コード構成音を結ぶと現れる図形を描画
-  appObj.objList['others'].forEach(o => o.destroy()); // 前に描画した図形を削除
-  appObj.objList['others'] = [];
+  cf.objList['others'].forEach(o => o.destroy()); // 前に描画した図形を削除
+  cf.objList['others'] = [];
 
   const path = [];
   const chordPolygon = new PIXI.Graphics();
-  const innerRadius = appObj.app.view.width / 2 - appObj.margin - appObj.ringWidth;
+  const innerRadius = cf.app.view.width / 2 - cf.margin - cf.ringWidth;
   vertexIndexList.forEach(vi => {
-    const x = appObj.app.view.width / 2 + Math.cos(getRadian(-90 + (30 * vi))) * innerRadius;
-    const y = appObj.app.view.height / 2 + Math.sin(getRadian(-90 + (30 * vi))) * innerRadius;
+    const x = cf.app.view.width / 2 + Math.cos(getRadian(-90 + (30 * vi))) * innerRadius;
+    const y = cf.app.view.height / 2 + Math.sin(getRadian(-90 + (30 * vi))) * innerRadius;
     path.push(x, y);
     chordPolygon.lineStyle(0);
-    chordPolygon.beginFill(appObj.color.main);
+    chordPolygon.beginFill(cf.color.main);
     chordPolygon.drawCircle(x, y, 5);
     chordPolygon.endFill();
   });
-  chordPolygon.lineStyle(3, appObj.color.main);
-  chordPolygon.beginFill(appObj.color.light, 0.25);
+  chordPolygon.lineStyle(3, cf.color.main);
+  chordPolygon.beginFill(cf.color.light, 0.25);
   chordPolygon.drawPolygon(path);
-  appObj.objList['others'].push(chordPolygon);
-  appObj.app.stage.addChild(chordPolygon);
+  cf.objList['others'].push(chordPolygon);
+  cf.app.stage.addChild(chordPolygon);
 
   // コード名を付ける
   const chordNameList = componentList.map(components => components[0].name + 'dim7');
 
   // 結果エリアに表示
-  appObj.eventListenerContainer.get('noteAreaClicked').forEach(listener => {
-    listener({
-      mode: appObj.mode,
-      nameList: chordNameList,
-      componentList: componentList
-    });
-  });
-  
+  // appObj.eventListenerContainer.get('noteAreaClicked').forEach(listener => {
+  //   listener({
+  //     mode: appObj.mode,
+  //     nameList: chordNameList,
+  //     componentList: componentList
+  //   });
+  // });
+
+  return {
+    mode: "dim7",
+    nameList: chordNameList,
+    componentList: componentList
+  };
 }

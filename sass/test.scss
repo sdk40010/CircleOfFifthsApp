@@ -1,0 +1,96 @@
+@use "@material/theme" with (
+  $primary: #344955,
+  $secondary: #f9aa33
+);
+@use "@material/list/mdc-list";
+@use "@material/menu-surface/mdc-menu-surface";
+@use "@material/menu/mdc-menu";
+@use "@material/select/mdc-select";
+// mixin用
+@use "@material/select"; 
+@use "@material/list";
+
+@use "@material/icon-button";
+@use "@material/top-app-bar/mdc-top-app-bar";
+@include icon-button.core-styles;
+
+body {
+  margin: 0;
+  font-family: 'Arial','Helvetica Neue','Helvetica',sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+}
+h1 , h2, h3, h4 , h5, h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+
+#app-container {
+  width: 100%;
+  margin:0 auto;
+  padding:24px 0;
+}
+
+#result-container {
+  margin-bottom: 1rem;
+
+  .mode-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .5rem;
+
+    .custom-select {
+      min-width: 130px;
+      @include select.outlined-height(40px);
+    }
+
+    .custom-list-item {
+      @include list.list-item-height(40px);
+    }
+  }
+  .name {
+    display: inline-block;
+  }
+  .name-list {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: .5rem;
+  }
+  .name:not(:first-child)::before {
+    content: '/';
+    font-size: 2.5rem;
+    margin: 0 .5rem;
+  }
+  .components-list {
+    text-align: center;
+    margin-bottom: .5rem;
+  }
+  .component-wrapper {
+    display: inline-block;
+    margin-bottom: .25rem;
+  }
+  .component-wrapper:not(:first-child)::before {
+    content: '/';
+    font-size: 1.25rem;
+    margin-right: .25rem;
+  }
+  .component {
+    display: inline-block;
+    width: 2rem;
+    text-align: center;
+    border: 1px solid #E0E0E0;
+    border-radius: 50%;
+    margin-right: .25rem;
+    padding: 4px 0;
+  }
+  .component:hover {
+    background-color: #E0E0E0;
+  }
+}
+
+#circle-of-fifths {
+  display: flex;
+  justify-content: center;
+}
