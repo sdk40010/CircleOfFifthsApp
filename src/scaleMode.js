@@ -8,7 +8,7 @@
 export default function handleScaleMode(noteAreaData) {
   const componentsList = [];
   const noteAreaIndex = noteAreaData.index;
-  const withKeySignature = ['F' ,'C', 'G', 'D', 'A', 'E', 'B'];
+  const withKeySignature = ['F' ,'C', 'G', 'D', 'A', 'E', 'B']; // 調号が付く順に並んだ音名
 
   // スケールの主音から始まる構成音の配列を作成
   let components = createComponents(noteAreaData);
@@ -28,8 +28,10 @@ export default function handleScaleMode(noteAreaData) {
   }
   // noteAreaIndexが6の場合はシャープとフラットの2種類の表記がある
   if (noteAreaIndex == 6) {
-    noteAreaData.noteName = components[1].name;
-    components = createComponents(noteAreaData);
+    components = createComponents({
+      ...noteAreaData,
+      noteName: components[1].name // １度上の音名
+    });
   }
   if (6 <= noteAreaIndex && noteAreaIndex <= 11) {
     const withFlat = withKeySignature.slice().reverse().slice(0, 12 - noteAreaIndex);
@@ -44,9 +46,9 @@ export default function handleScaleMode(noteAreaData) {
   // スケールの名前を付ける
   const scaleNameList = [];
   if (noteAreaData.scale === 'major') {
-    componentsList.forEach(componentList => scaleNameList.push(componentList[0].name));
+    componentsList.forEach(components => scaleNameList.push(components[0].name));
   } else if (noteAreaData.scale = 'minor') {
-    componentsList.forEach(componentList => scaleNameList.push(componentList[0].name + 'm'));
+    componentsList.forEach(components => scaleNameList.push(components[0].name + 'm'));
   }
 
   return {
